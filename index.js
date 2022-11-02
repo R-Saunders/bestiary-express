@@ -23,8 +23,8 @@ const entriesSchema = new mongoose.Schema({
   location: String,
   mythology: String,
   description: String,
-  characteristics: Array,
-  image: Image,
+  characteristics: String,
+  image: URL,
   content: String
 });
 
