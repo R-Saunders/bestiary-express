@@ -24,7 +24,7 @@ const entriesSchema = new mongoose.Schema({
   mythology: String,
   description: String,
   characteristics: String,
-  image: URL,
+  image: String,
   content: String
 });
 
