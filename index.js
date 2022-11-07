@@ -6,9 +6,7 @@ dotenv.config();
 const mongoose = require("mongoose");
 
 const DB = process.env.DATABASE;
-const connectDB = mongoose.connect(DB);
-console.log(connectDB);
-
+mongoose.connect(DB);
 const app = express();
 
 app.use(cors());
@@ -33,16 +31,18 @@ const entriesModel = mongoose.model("Entries", entriesSchema);
 app.get('/read', async(req,res)=>{
   const allEntries = await entriesModel.find();
   res.send(allEntries);
+  // console.log(allEntries);
 });
 
 app.get('/read/:id', async(req, res)=>{
   const _id = req.params.id;
-  const data = await entriesModel.findById(_id);
-  res.send(data);
+  const singleID = await entriesModel.findById(_id);
+  console.log(singleID);
+  res.json(singleID);
 });
 
 app.post("/create", (req,res)=>{
-  const newEntrie = new entriesModel({
+  const newEntry = new entriesModel({
     name: req.body.name,
     location: req.body.location,
     mythology: req.body.mythology,
@@ -51,7 +51,7 @@ app.post("/create", (req,res)=>{
     image: req.body.image,
     content: req.body.content
   });
-  newEntrie.save();
+  newEntry.save();
   res.send("New Entrie Logged Successfully");
 });
 
