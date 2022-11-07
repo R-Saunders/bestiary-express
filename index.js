@@ -31,13 +31,11 @@ const entriesModel = mongoose.model("Entries", entriesSchema);
 app.get('/read', async(req,res)=>{
   const allEntries = await entriesModel.find();
   res.send(allEntries);
-  // console.log(allEntries);
 });
 
 app.get('/read/:id', async(req, res)=>{
   const _id = req.params.id;
   const singleID = await entriesModel.findById(_id);
-  console.log(singleID);
   res.json(singleID);
 });
 
