@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req,res)=>{
+app.get("/.netlify/functions/api", (req,res)=>{
   res.send("<h1>Welcome to the Bestiary Express server</h1>")
 });
 
@@ -29,18 +29,18 @@ const entriesSchema = new mongoose.Schema({
 
 const entriesModel = mongoose.model("Entries", entriesSchema);
 
-app.get('/read', async(req,res)=>{
+app.get('/.netlify/functions/api/read', async(req,res)=>{
   const allEntries = await entriesModel.find();
   res.send(allEntries);
 });
 
-app.get('/read/:id', async(req, res)=>{
+app.get('/.netlify/functions/api/read/:id', async(req, res)=>{
   const _id = req.params.id;
   const singleID = await entriesModel.findById(_id);
   res.json(singleID);
 });
 
-app.post("/create", (req,res)=>{
+app.post("/.netlify/functions/api/create", (req,res)=>{
   const newEntry = new entriesModel({
     name: req.body.name,
     location: req.body.location,
@@ -54,14 +54,14 @@ app.post("/create", (req,res)=>{
   res.send("New Entrie Logged Successfully");
 });
 
-app.patch('/update/:id', async(req, res)=>{
+app.patch('/.netlify/functions/api/update/:id', async(req, res)=>{
   const _id = req.params.id;
   const data = await entriesModel.findById(_id);
   data.save();
   res.send(data);
 });
 
-app.delete('/delete/:id', async(req,res)=>{
+app.delete('/.netlify/functions/api/delete/:id', async(req,res)=>{
   const _id = req.params.id;
   const name = req.body.name;
   await entriesModel.findByIdAndDelete(_id);
